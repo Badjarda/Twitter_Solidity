@@ -34,7 +34,7 @@ contract Twitter {
     }
 
     function createTweet(string memory _tweet) public {
-        require(bytes(_tweet).length <= MAX_TWEET_LENGTH, "Tweet is too long bro!" );
+        require(bytes(_tweet).length <= MAX_TWEET_LENGTH, "TWEET IS TOO LONG!" );
 
         Tweet memory newTweet = Tweet({
             id: tweets[msg.sender].length,
