@@ -16,19 +16,38 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   async function getTweets() {
-    if (!web3 || !contract) {
-      console.error("Web3 or contract not initialized.");
+    if (!web3 || !contract || !profileContract) {
+      console.error("Web3, contract, or profileContract not initialized.");
       return;
     }
-
-    const tempTweets = await contract.methods.getAllTweets(account).call();
-    // we do this so we can sort the tweets by timestamp
-    const tweets = [...tempTweets];
-    tweets.sort((a, b) => b.timestamp - a.timestamp);
-    setTweets(tweets);
-    setLoading(false);
+  
+    try {
+      const tempTweets = await contract.methods.getAllTweets().call();
+      for (let index = 0; index < tempTweets.length; index++) {
+        const element = tempTweets[index];
+        console.log(element)
+      }
+  
+      // Fetch display names for each tweet's author
+      const tweetsWithNames = await Promise.all(
+        tempTweets.map(async (tweet) => {
+          const profile = await profileContract.methods.getProfile(tweet.author).call();
+          return {
+            ...tweet,
+            displayName: profile.displayName || "Anonymous",
+          };
+        })
+      );
+  
+      // Sort tweets by timestamp
+      tweetsWithNames.sort((a, b) => b.timestamp - a.timestamp);
+      setTweets(tweetsWithNames);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch tweets:", error);
+    }
   }
-
+  
   async function checkProfile() {
     const userProfile = await getProfile(account);
     setProfileExists(userProfile);
@@ -58,9 +77,7 @@ export default function App() {
   }, [contract, account, profileExists]);
 
   function shortAddress(address, startLength = 6, endLength = 4) {
-    if (address === account && profileExists) {
-      return profileExists;
-    } else if (address) {
+    if (address) {
       return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
     }
   }
@@ -84,7 +101,13 @@ export default function App() {
             account={account}
             getTweets={getTweets}
           />
-          <Tweets tweets={tweets} shortAddress={shortAddress} />
+          <Tweets 
+            tweets={tweets} 
+            shortAddress={shortAddress} 
+            contract={contract} 
+            account={account} 
+            getTweets={getTweets}
+          />
         </>
       ) : (
         account &&
