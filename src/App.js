@@ -31,7 +31,6 @@ export default function App() {
 
   async function checkProfile() {
     const userProfile = await getProfile(account);
-
     setProfileExists(userProfile);
   }
 

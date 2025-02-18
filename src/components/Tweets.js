@@ -5,7 +5,7 @@ const Tweets = ({ tweets, shortAddress }) => {
         <div key={index} className="tweet">
           <img
             className="user-icon"
-            src={`https://avatars.dicebear.com/api/human/${tweet.author}.svg`}
+            src={`https://robohash.org/${tweet.author}.png?set=set4`}
             alt="User Icon"
           />
           <div className="tweet-inner">
