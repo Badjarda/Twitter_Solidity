@@ -23,4 +23,4 @@
 ## Improvements:
 - UI
 - Like and unlike disappered
-- Add features in new branches, test and merge (comments, imagens)
+- Add features in new branches, test and merge (comments, imagens, etc.)
