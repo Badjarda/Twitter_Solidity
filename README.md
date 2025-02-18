@@ -2,7 +2,7 @@
 
 ## How to run:
 
-1. Upload the Twitter.sol and Userprofile.sol files to Remix IDE.
+1. Upload the Twitter.sol and Userprofile.sol files to Remix IDE (https://remix.ethereum.org).
 
 2. Deploy these contracts to the Sepolia test network using metamask, starting with the UserProfile and then the Twitter contract (copy the UserProfile address to the field on the deploy step).
 
