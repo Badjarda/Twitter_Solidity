@@ -10,7 +10,7 @@
 
 4. In file Connect.js, update the contract addresses the copied ones.
 
-4. npm install + npm start
+4. npm install + npm install @openzeppelin/contracts + npm start
 
 5. Connect with wallet (Metamask Sepolia profile)
 
